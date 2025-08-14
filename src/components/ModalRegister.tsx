@@ -59,16 +59,21 @@ export default function ModalRegister() {
   // ----------------------------------------------------------------
 
   const computeTotalPayment = () => {
+    let planPrice = 0;
+    let ExtraItemPrice = 0;
     let total = 0;
-    if (plan === "funrun") total += 500;
-    if (plan === "mini") total += 800;
-    if (plan === "half") total += 1200;
-    if (plan === "full") total += 1500;
-    if (buyBottle) total += 200;
-    if (buyShoes) total += 600;
-    if (buyCap) total += 400;
 
-    if (buyBottle && buyShoes && buyCap) total *= 0.8;
+    if (plan === "funrun") planPrice += 500;
+    if (plan === "mini") planPrice += 800;
+    if (plan === "half") planPrice += 1200;
+    if (plan === "full") planPrice += 1500;
+    if (buyBottle) ExtraItemPrice += 200;
+    if (buyShoes) ExtraItemPrice += 600;
+    if (buyCap) ExtraItemPrice += 400;
+
+    if (buyBottle && buyShoes && buyCap) ExtraItemPrice *= 0.8;
+
+    total = planPrice + ExtraItemPrice;
 
     return total;
   };
@@ -223,6 +228,7 @@ export default function ModalRegister() {
                 />
                 <label className="form-check-label">Cap 🧢 (400 THB)</label>
               </div>
+              {buyBottle && buyShoes && buyCap ? (<span className="text-success d-block">(20% Discounted)</span>) : ""}
             </div>
 
             <div className="alert alert-primary mt-3" role="alert">
@@ -234,9 +240,6 @@ export default function ModalRegister() {
               Total Payment : {computeTotalPayment().toLocaleString()} THB
               {/* Render below element conditionally when user get 20% discount */}
               {/* <span className="text-success d-block">(20% Discounted)</span> */}
-              {buyBottle && buyShoes && buyCap ? (
-                <span className="text-success d-block">(20% Discounted)</span>
-              ) : ""}
             </div>
           </div>
           <div className="modal-footer">
